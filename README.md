@@ -314,7 +314,7 @@ Each device can have one of the following statuses:
 
 | Status | Meaning                                              |
 | ------ | ---------------------------------------------------- |
-| ACTIVE | Device is sending heartbeats and is working normally |
+| ALIVE | Device is sending heartbeats and is working normally |
 | PAUSED | Monitoring is temporarily paused (maintenance mode)  |
 | DOWN   | Device failed to send heartbeat before timeout       |
 
