@@ -291,3 +291,37 @@ for instance:
 ]
 ```
 ---
+
+
+# 4.  **The Developer's Choice:** Explanation of your added feature.
+
+## Device Status Endpoint
+
+I added a new endpoint that allows administrators to view the status of all monitored devices at once.
+
+```
+GET /moniter/devices-status
+```
+
+### Why This Feature Is Useful
+
+In a real monitoring system, administrators may need to quickly check the health of all devices. Without this feature, they would need to check each device individually by sending requests to different endpoints.
+
+This endpoint provides a quick overview of all monitored devices and their current status.
+
+### Device Status Types
+Each device can have one of the following statuses:
+
+| Status | Meaning                                              |
+| ------ | ---------------------------------------------------- |
+| ACTIVE | Device is sending heartbeats and is working normally |
+| PAUSED | Monitoring is temporarily paused (maintenance mode)  |
+| DOWN   | Device failed to send heartbeat before timeout       |
+
+### Example Usage
+
+```
+curl http://127.0.0.1:5000/moniter/devices-status
+```
+
+
