@@ -7,7 +7,6 @@
 
 
 # 2.  **Setup Instructions** 
-## Setup Instructions
 
 Follow these steps to run the project on your computer.
 
@@ -228,7 +227,7 @@ curl -X POST http://127.0.0.1:5000/monitors/device-1/pause
 
 ---
 
-# 4. Get All Device Status (Developer’s Choice Feature)
+## 4. Get All Device Status (Developer’s Choice Feature)
 
 This endpoint shows the status of all monitored devices.
 
