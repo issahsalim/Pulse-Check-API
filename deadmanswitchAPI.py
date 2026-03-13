@@ -69,6 +69,17 @@ def heartbeat(id):
     return jsonify({"error": "Device not found"}), 404 
 
 
+@app.route("/moniter/<id>/pause", methods=["POST"]) 
+def Pause(id): 
+    for moniter in monitors: 
+        if moniter["id"]==id: 
+            moniter["timer"].cancel() 
+            moniter["status"]="paused"  
+            print(f"Device {id} successfully paused") 
+            return jsonify({"message": f"Monitor Device {id} successfully paused"}), 200 
+        
+    return jsonify({"message":"device not found"}), 404 
+
 
 
 if __name__ == '__main__':  
