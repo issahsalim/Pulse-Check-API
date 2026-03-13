@@ -276,6 +276,8 @@ Example output:
 The system loops through all registered monitors and prints all the current status of the device 
 
 for instance: 
+
+```json 
 [
   {
     "device_id": "device-1",
@@ -290,5 +292,5 @@ for instance:
     "status": "pause"
   }
 ]
-
+```
 ---
