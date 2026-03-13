@@ -87,7 +87,7 @@ to stop the server.
 
 
 
-3.  **API Documentation** 
+# 3.  **API Documentation** 
 
 This API monitors remote devices using a **Dead Man’s Switch** mechanism.
 Each device registers with a timeout and must send periodic heartbeats.
@@ -240,7 +240,7 @@ This endpoint shows the status of all monitored devices.
 GET /monitors/devices-status
 ```
 
-### Curl Test
+### Curl Test 
 
 ```
 curl http://127.0.0.1:5000/monitors/devices-status
