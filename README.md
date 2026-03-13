@@ -300,7 +300,7 @@ for instance:
 I added a new endpoint that allows administrators to view the status of all monitored devices at once.
 
 ```
-GET /moniter/devices-status
+GET /monitors/devices-status
 ```
 
 ### Why This Feature Is Useful
