@@ -107,7 +107,7 @@ This endpoint registers a new device and starts a monitoring timer.
 ### Endpoint
 
 ```
-POST /moniter
+POST /monitors
 ```
 
 ### Request Body
@@ -120,22 +120,19 @@ POST /moniter
 }
 ```
 
-### Curl Test
+### Curl Test on cmd 
 
 ```
-curl -X POST http://127.0.0.1:5000/moniter -H "Content-Type: application/json" -d "{\"device_id\":\"device-1\",\"timeout\":10,\"alert\":\"salim@gmail.com\"}"
+curl -X POST http://127.0.0.1:5000/monitors -H "Content-Type: application/json" -d "{\"device_id\":\"device-1\",\"timeout\":10,\"alert\":\"salim@gmail.com\"}"
 
 ```
 
 ### Response
 
-```
-201 Created
-``` 
-
+ 
 ```json
 {
-  "message": "Monitoring (device_id) created for it (timeout)"
+  "message": "Monitoring (device_id) created for (timeout e.g 10s, 20s)"
 }
 ```
 
@@ -149,24 +146,24 @@ curl -X POST http://127.0.0.1:5000/moniter -H "Content-Type: application/json" -
 
 
 # 2. Send Heartbeat
-Devices must periodically send a heartbeat to reset the timer.
+Devices must periodically send a heartbeat to  reset the timer so no alert is sent.
 
 ### Endpoint
 
 ```
-POST /moniter/{device_id}/heartbeat
+POST /monitors/{device_id}/heartbeat
 ```
 
 ### Example
 
 ```
-POST /moniter/device-1/heartbeat
+POST /monitors/device-1/heartbeat
 ```
 
-### Curl Test
+### Curl Test on cmd 
 
 ```
-curl -X POST http://127.0.0.1:5000/moniter/device-1/heartbeat
+curl -X POST http://127.0.0.1:5000/monitors/device-1/heartbeat
 ```
 
 ### Response
@@ -177,14 +174,14 @@ curl -X POST http://127.0.0.1:5000/moniter/device-1/heartbeat
 
 ```json
 {
-  "message": "Heartbeat received"
+  "message": "Heartbeat received from device-1"
 }
 ```
 
 ### What Happens
 
 1. The system checks if the device exists.
-2. The current timer is cancelled.
+2. The current timer is cancel.
 3. A new timer starts again from the beginning.
 
 ---
@@ -193,24 +190,23 @@ curl -X POST http://127.0.0.1:5000/moniter/device-1/heartbeat
 
 This endpoint pauses monitoring for a device.
 
-This is useful when a technician is repairing the device.
 
 ### Endpoint
 
 ```
-POST /moniter/{device_id}/pause
+POST /monitors/{device_id}/pause
 ```
 
 ### Example
 
 ```
-POST /moniter/device-1/pause
+POST /monitors/device-1/pause
 ```
 
-### Curl Test
+### Curl Test on cmd 
 
 ```
-curl -X POST http://127.0.0.1:5000/moniter/device-1/pause
+curl -X POST http://127.0.0.1:5000/monitors/device-1/pause
 ```
 
 ### Response
@@ -221,7 +217,7 @@ curl -X POST http://127.0.0.1:5000/moniter/device-1/pause
 
 ```json
 {
-  "message": "Monitor paused"
+  "message": "Monitor Device device-1 successfully paused"
 }
 ```
 
@@ -240,13 +236,13 @@ This endpoint shows the status of all monitored devices.
 ### Endpoint
 
 ```
-GET /moniter/devices-status
+GET /monitors/devices-status
 ```
 
 ### Curl Test
 
 ```
-curl http://127.0.0.1:5000/moniter/devices-status
+curl http://127.0.0.1:5000/monitors/devices-status
 ```
 
 ### Response
@@ -276,17 +272,22 @@ Example output:
 
 ### What Happens
 
-The system loops through all registered monitors and prints:
+The system loops through all registered monitors and prints all the current status of the device 
 
-all devices status for instance:
- {
+for instance: 
+[
+  {
+    "device_id": "device-1",
+    "status": "down"
+  },
+  {
+    "device_id": "device-2",
+    "status": "alive"
+  },
+  {
     "device_id": "device-3",
     "status": "pause"
   }
-
-
-in the server console.
-
-This allows administrators to quickly view the status of all devices.
+]
 
 ---
