@@ -17,7 +17,7 @@ def device_timout(device_id):
             
 
 # Register device
-@app.route("/moniter", methods=["POST"])
+@app.route("/monitor", methods=["POST"])
 def Monisters():
 
     data = request.get_json()
@@ -45,7 +45,7 @@ def Monisters():
 
 
 # Heartbeat endpoint
-@app.route("/moniter/<id>/heartbeat", methods=["POST"])
+@app.route("/monitor/<id>/heartbeat", methods=["POST"])
 def heartbeat(id):
     for moniter in monitors:
 
@@ -69,7 +69,7 @@ def heartbeat(id):
     return jsonify({"error": "Device not found"}), 404 
 
 # pause endpoint
-@app.route("/moniter/<id>/pause", methods=["POST"]) 
+@app.route("/monitor/<id>/pause", methods=["POST"]) 
 def Pause(id): 
     for moniter in monitors: 
         if moniter["id"]==id: 
@@ -82,7 +82,7 @@ def Pause(id):
 
 
 # MY OWN FEATURE: checking all devices status 
-@app.route("/moniter/devices-status", methods=["GET"])  
+@app.route("/monitor/devices-status", methods=["GET"])  
 def devices_status(): 
     status_info=   []
     for monitor in monitors: 
