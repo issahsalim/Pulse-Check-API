@@ -68,7 +68,7 @@ def heartbeat(id):
 
     return jsonify({"error": "Device not found"}), 404 
 
-
+# pause endpoint
 @app.route("/moniter/<id>/pause", methods=["POST"]) 
 def Pause(id): 
     for moniter in monitors: 
@@ -79,6 +79,29 @@ def Pause(id):
             return jsonify({"message": f"Monitor Device {id} successfully paused"}), 200 
         
     return jsonify({"message":"device not found"}), 404 
+
+
+# MY OWN FEATURE: checking all devices status 
+@app.route("/moniter/devices-status", methods=["GET"])  
+def devices_status(): 
+    status_info=   []
+    for monitor in monitors: 
+        if monitor["status"]=="Alive": 
+            status="Alive" 
+        elif monitor["status"]=="paused":
+            status="Paused" 
+        else:
+            status="Down"  
+        
+        status_info.append({
+                    "device_id": monitor["id"], 
+                    "status": status
+        }) 
+
+        print("\n\n Curent Devices Status:") 
+        print(status_info) 
+
+    return jsonify({"devices_status": status_info}), 200
 
 
 
