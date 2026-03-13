@@ -293,7 +293,7 @@ for instance:
 ---
 
 
-# 4.  **The Developer's Choice:** Explanation of your added feature.
+# 4.  **The Developer's Choice:**  
 
 ## Device Status Endpoint
 
