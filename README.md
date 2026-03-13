@@ -1,7 +1,5 @@
-## 8. Documentation Requirements
-Your final `README.md` must replace these instructions. It must cover:
 
-1.  **Architecture Diagram** 
+# 1.  **Architecture Diagram** 
 
 ![Architecture Diagram](ArchitectureDiagram.png)
 
@@ -101,7 +99,7 @@ http://127.0.0.1:5000
 
 ---
 
-# 1. Register a Monitor
+## 1. Register a Monitor
 
 This endpoint registers a new device and starts a monitoring timer.
 
@@ -146,7 +144,7 @@ curl -X POST http://127.0.0.1:5000/monitors -H "Content-Type: application/json" 
 ---
 
 
-# 2. Send Heartbeat
+## 2. Send Heartbeat
 Devices must periodically send a heartbeat to  reset the timer so no alert is sent.
 
 ### Endpoint
@@ -187,7 +185,7 @@ curl -X POST http://127.0.0.1:5000/monitors/device-1/heartbeat
 
 ---
 
-# 3. Pause Monitoring
+## 3. Pause Monitoring
 
 This endpoint pauses monitoring for a device.
 
