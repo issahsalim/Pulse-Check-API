@@ -66,8 +66,9 @@ You can test the endpoints using **curl** or **Postman**.
 
 Example: To register a device, open cmd(specifically) and paste the below url command 
 
+```
 curl -X POST http://127.0.0.1:5000/monitor -H "Content-Type: application/json" -d "{\"device_id\":\"device-1\",\"timeout\":10,\"alert\":\"salim@gmail.com\"}"
-
+```
 
 
 
