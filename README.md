@@ -147,8 +147,10 @@ curl -X POST http://127.0.0.1:5000/monitors -H "Content-Type: application/json" 
 
 1. The device is registered.
 2. A timer starts with the specified timeout.
-3. If the timer reaches zero, an alert is triggered. on the development server saying {'ALERT': 'Device device-1 is down', 'time': '15:33:30 2026-03-14'} 
-
+3. If the timer reaches zero, an alert is triggered. on the development server saying 
+```
+{'ALERT': 'Device device-1 is down', 'time': '15:33:30 2026-03-14'} 
+```
 ---
 
 
