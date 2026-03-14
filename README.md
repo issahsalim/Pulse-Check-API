@@ -63,10 +63,15 @@ You can test the endpoints using **curl** or **Postman**.
 
 Example: To register a device, open cmd(specifically) and paste the below url command 
 
+#### on cmd 
 ```
-curl -X POST http://127.0.0.1:5000/monitor -H "Content-Type: application/json" -d "{\"device_id\":\"device-1\",\"timeout\":10,\"alert\":\"salim@gmail.com\"}"
+curl -X POST http://127.0.0.1:5000/monitors -H "Content-Type: application/json" -d "{\"device_id\":\"device-1\",\"timeout\":10,\"alert\":\"salim@gmail.com\"}"
 ```
 
+#### on bash (Linux, Mac, Git Bash)
+```
+curl -X POST http://127.0.0.1:5000/monitors -H "Content-Type: application/json" -d '{"device_id":"device-1","timeout":10,"alert":"salim@gmail.com"}'
+```
 
 
 This will create a new monitor and start tracking the device.
@@ -124,10 +129,14 @@ POST /monitors
 curl -X POST http://127.0.0.1:5000/monitors -H "Content-Type: application/json" -d "{\"device_id\":\"device-1\",\"timeout\":10,\"alert\":\"salim@gmail.com\"}"
 
 ```
+#### on bash (Linux, Mac, Git Bash)
 
+```
+curl -X POST http://127.0.0.1:5000/monitors -H "Content-Type: application/json" -d '{"device_id":"device-1","timeout":10,"alert":"salim@gmail.com"}'
+```
 ### Response
 
- 
+
 ```json
 {
   "message": "Monitoring (device_id) created for (timeout e.g 10s, 20s)"
@@ -158,7 +167,7 @@ POST /monitors/{device_id}/heartbeat
 POST /monitors/device-1/heartbeat
 ```
 
-### Curl Test on cmd 
+### Curl Test 
 
 ```
 curl -X POST http://127.0.0.1:5000/monitors/device-1/heartbeat
@@ -201,7 +210,7 @@ POST /monitors/{device_id}/pause
 POST /monitors/device-1/pause
 ```
 
-### Curl Test on cmd 
+### Curl Test 
 
 ```
 curl -X POST http://127.0.0.1:5000/monitors/device-1/pause
@@ -301,6 +310,11 @@ I added a new endpoint that allows administrators to view the status of all moni
 
 ```
 GET /monitors/devices-status
+```
+
+### curl test 
+```
+curl http://127.0.0.1:5000/monitors/devices-status
 ```
 
 ### Why This Feature Is Useful
