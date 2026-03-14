@@ -332,10 +332,6 @@ Each device can have one of the following statuses:
 | PAUSED | Monitoring is temporarily paused (maintenance mode)  |
 | DOWN   | Device failed to send heartbeat before timeout       |
 
-### Example Usage
 
-```
-curl http://127.0.0.1:5000/moniter/devices-status
-```
 
 
