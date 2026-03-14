@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 import threading 
-
+import time 
 
 app = Flask(__name__) 
 
@@ -12,7 +12,7 @@ def device_timout(device_id):
             monitor["status"]="down" 
     print({
         "ALERT":f"Device {device_id} is down",
-        "time":f"{device_id} has not checked in for 5 minutes" 
+        "time":time.strftime("%H:%M:%S %Y-%m-%d" )
     }) 
             
 
