@@ -95,7 +95,8 @@ def devices_status():
         
         status_info.append({
                     "device_id": monitor["id"], 
-                    "status": status
+                    "status": status,
+                    
         }) 
 
         print("\n\n Curent Devices Status:") 
