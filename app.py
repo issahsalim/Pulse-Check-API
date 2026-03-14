@@ -32,9 +32,9 @@ def Monisters():
     new_moniter = {
         "id": device_id,
         "timeout": timeout,
-        "alert": alert,
+        "alert": alert, 
         "timer": timer, 
-        "status": "ACTIVE"
+        "status": "Alive"
     }
 
     monitors.append(new_moniter)
