@@ -113,21 +113,7 @@ to stop the server.
 
 # 4. API Documentation
 
-This API monitors remote devices using a **Dead Man’s Switch** system.
 
-Each device:
-
-1. Registers with a timeout
-2. Sends periodic heartbeats
-3. Triggers an alert if the heartbeat stops
-
-Base URL:
-
-```
-http://127.0.0.1:5000
-```
-
----
 
 # 1. Register a Monitor
 
