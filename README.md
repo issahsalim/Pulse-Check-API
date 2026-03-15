@@ -1,9 +1,4 @@
-# Pulse Check API
 
-A simple **device monitoring API** built with **Flask** that implements a **Dead Man’s Switch mechanism**.
-Devices register with a timeout and must send periodic heartbeats. If a heartbeat is not received before the timeout expires, the system triggers an alert.
-
----
 
 # 1. Architecture Diagram
 
@@ -16,10 +11,10 @@ Devices register with a timeout and must send periodic heartbeats. If a heartbea
 ```
 Pulse-Check-API
 │
-├── app.py
-├── requirements.txt
-├── README.md
-└── ArchitectureDiagram.png
+├── app.py  #this is the main application file
+├── requirements.txt  # this is the requirment that must be install before 
+├── README.md  # this is the project doucmentation 
+└── ArchitectureDiagram.png # this is the Flow chart of how the architecture of the project works 
 ```
 
 ---
