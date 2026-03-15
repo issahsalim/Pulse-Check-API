@@ -25,6 +25,10 @@ def Monisters():
     device_id = data["device_id"]
     timeout = data["timeout"]
     alert = data["alert"]
+    
+    for monitor in monitors:
+        if monitor["id"]== device_id: 
+            return jsonify ({"message":"Device already exist"})
 
     timer = threading.Timer(timeout, device_timout, args=[device_id])
     timer.start()
@@ -37,6 +41,7 @@ def Monisters():
         "status": "Alive"
     }
 
+    
     monitors.append(new_moniter)
 
     print(f"Monitoring {device_id} for {timeout} seconds")
@@ -93,6 +98,7 @@ def devices_status():
         else:
             status="Down"  
         
+        
         status_info.append({
                     "device_id": monitor["id"], 
                     "status": status,
@@ -104,6 +110,34 @@ def devices_status():
 
     return jsonify({"devices_status": status_info}), 200
 
+
+# update timer
+@app.route("/monitors/<device_id>/timeout", methods=["PUT"])
+def update_timeout(device_id):
+
+    data = request.get_json()
+    new_timeout = data["timeout"]
+
+    for monitor in monitors:
+        if monitor["id"] == device_id:
+
+            # stop old timer
+            monitor["timer"].cancel()
+
+            # update timeout
+            monitor["timeout"] = new_timeout
+
+            # start new timer
+            timer = threading.Timer(new_timeout, device_timout, args=[device_id])
+            timer.start()
+
+            monitor["timer"] = timer
+
+            return jsonify({
+                "message": f"Timeout for {device_id} updated to {new_timeout} seconds"
+            }), 200
+
+    return jsonify({"message": "Device not found"}), 404
 
 
 if __name__ == '__main__':  

@@ -1,20 +1,38 @@
+# Pulse Check API
 
-# 1.  **Architecture Diagram** 
+A simple **device monitoring API** built with **Flask** that implements a **Dead Man’s Switch mechanism**.
+Devices register with a timeout and must send periodic heartbeats. If a heartbeat is not received before the timeout expires, the system triggers an alert.
+
+---
+
+# 1. Architecture Diagram
 
 ![Architecture Diagram](ArchitectureDiagram.png)
 
+---
 
+# 2. Project Structure
 
+```
+Pulse-Check-API
+│
+├── app.py
+├── requirements.txt
+├── README.md
+└── ArchitectureDiagram.png
+```
 
-# 2.  **Setup Instructions** 
+---
+
+# 3. Setup Instructions
 
 Follow these steps to run the project on your computer.
 
-### 1. Clone the Repository
+---
 
-After cloning the repo,
+## 1. Clone the Repository
 
-Move into the project folder:
+After cloning the repository, move into the project folder:
 
 ```bash
 cd Pulse-Check-API
@@ -22,9 +40,9 @@ cd Pulse-Check-API
 
 ---
 
-### 2. Install Dependencies
+## 2. Install Dependencies
 
-Make sure Python is installed on your computer.
+Make sure **Python 3** is installed on your computer.
 
 Install the required packages:
 
@@ -32,18 +50,25 @@ Install the required packages:
 pip install -r requirements.txt
 ```
 
-This project uses the following main package:
+Main package used:
 
 * Flask
 
 ---
 
-### 3. Run the Server
+## 3. Run the Server
 
-Start the application:
+Start the application.
 
-open the built-in terminal by pressing(cntrl + `) if you are using vscode, or open cmd and cd into 
-the folder when the project exist and type the below command. 
+If you are using **VS Code**, open the built-in terminal by pressing:
+
+```
+Ctrl + `
+```
+
+Or open **Command Prompt (cmd)** and navigate to the project folder.
+
+Run:
 
 ```bash
 python app.py
@@ -57,43 +82,49 @@ If everything works correctly, you should see something like:
 
 ---
 
-### 4. Test the API
+## 4. Test the API
 
 You can test the endpoints using **curl** or **Postman**.
 
-Example: To register a device, open cmd(specifically) and paste the below url command 
+Example: Register a device.
 
-#### on cmd 
+### On Windows CMD
+
 ```
 curl -X POST http://127.0.0.1:5000/monitors -H "Content-Type: application/json" -d "{\"device_id\":\"device-1\",\"timeout\":10,\"alert\":\"salim@gmail.com\"}"
 ```
 
-#### on bash (Linux, Mac, Git Bash)
+### On Bash (Linux, Mac, Git Bash)
+
 ```
 curl -X POST http://127.0.0.1:5000/monitors -H "Content-Type: application/json" -d '{"device_id":"device-1","timeout":10,"alert":"salim@gmail.com"}'
 ```
 
-
-This will create a new monitor and start tracking the device.
+This creates a new monitor and starts tracking the device.
 
 ---
 
-### 5. Stop the Server
+## 5. Stop the Server
 
 Press:
+
 ```
 CTRL + C
 ```
-to stop the server. 
 
+to stop the server.
 
+---
 
+# 4. API Documentation
 
-# 3.  **API Documentation** 
+This API monitors remote devices using a **Dead Man’s Switch** system.
 
-This API monitors remote devices using a **Dead Man’s Switch** mechanism.
-Each device registers with a timeout and must send periodic heartbeats.
-If the heartbeat is not received before the timeout expires, the system triggers an alert.
+Each device:
+
+1. Registers with a timeout
+2. Sends periodic heartbeats
+3. Triggers an alert if the heartbeat stops
 
 Base URL:
 
@@ -103,9 +134,9 @@ http://127.0.0.1:5000
 
 ---
 
-## 1. Register a Monitor
+# 1. Register a Monitor
 
-This endpoint registers a new device and starts a monitoring timer.
+Registers a new device and starts the monitoring timer.
 
 ### Endpoint
 
@@ -123,23 +154,23 @@ POST /monitors
 }
 ```
 
-### Curl Test on cmd 
+### Curl Test (CMD)
 
 ```
 curl -X POST http://127.0.0.1:5000/monitors -H "Content-Type: application/json" -d "{\"device_id\":\"device-1\",\"timeout\":10,\"alert\":\"salim@gmail.com\"}"
-
 ```
-#### on bash (Linux, Mac, Git Bash)
+
+### Curl Test (Bash)
 
 ```
 curl -X POST http://127.0.0.1:5000/monitors -H "Content-Type: application/json" -d '{"device_id":"device-1","timeout":10,"alert":"salim@gmail.com"}'
 ```
-### Response
 
+### Response
 
 ```json
 {
-  "message": "Monitoring (device_id) created for (timeout e.g 10s, 20s)"
+  "message": "Monitoring device-1 created with timeout 10 seconds"
 }
 ```
 
@@ -147,15 +178,19 @@ curl -X POST http://127.0.0.1:5000/monitors -H "Content-Type: application/json" 
 
 1. The device is registered.
 2. A timer starts with the specified timeout.
-3. If the timer reaches zero, an alert is triggered. on the development server saying 
+3. If the timer expires before a heartbeat is received, an alert is triggered.
+
+Example alert on the server:
+
 ```
-{'ALERT': 'Device device-1 is down', 'time': '15:33:30 2026-03-14'} 
+{'ALERT': 'Device device-1 is down', 'time': '15:33:30 2026-03-14'}
 ```
+
 ---
 
+# 2. Send Heartbeat
 
-## 2. Send Heartbeat
-Devices must periodically send a heartbeat to  reset the timer so no alert is sent.
+Devices send heartbeats to reset the monitoring timer.
 
 ### Endpoint
 
@@ -169,17 +204,13 @@ POST /monitors/{device_id}/heartbeat
 POST /monitors/device-1/heartbeat
 ```
 
-### Curl Test 
+### Curl Test
 
 ```
 curl -X POST http://127.0.0.1:5000/monitors/device-1/heartbeat
 ```
 
 ### Response
-
-```
-200 OK
-```
 
 ```json
 {
@@ -190,15 +221,14 @@ curl -X POST http://127.0.0.1:5000/monitors/device-1/heartbeat
 ### What Happens
 
 1. The system checks if the device exists.
-2. The current timer is cancel.
+2. The current timer is cancelled.
 3. A new timer starts again from the beginning.
 
 ---
 
-## 3. Pause Monitoring
+# 3. Pause Monitoring
 
 This endpoint pauses monitoring for a device.
-
 
 ### Endpoint
 
@@ -212,7 +242,7 @@ POST /monitors/{device_id}/pause
 POST /monitors/device-1/pause
 ```
 
-### Curl Test 
+### Curl Test
 
 ```
 curl -X POST http://127.0.0.1:5000/monitors/device-1/pause
@@ -220,13 +250,9 @@ curl -X POST http://127.0.0.1:5000/monitors/device-1/pause
 
 ### Response
 
-```
-200 OK
-```
-
 ```json
 {
-  "message": "Monitor Device device-1 successfully paused"
+  "message": "Monitor device-1 successfully paused"
 }
 ```
 
@@ -238,9 +264,58 @@ curl -X POST http://127.0.0.1:5000/monitors/device-1/pause
 
 ---
 
-## 4. Get All Device Status (Developer’s Choice Feature)
+# 4. Update Monitor Timeout(Developer’s Choice Feature)
 
-This endpoint shows the status of all monitored devices.
+This endpoint allows administrators to **update the timeout of an already registered device**.
+
+### Endpoint
+
+```
+PUT /monitors/{device_id}/timeout
+```
+
+### Example
+
+```
+PUT /monitors/device-1/timeout
+```
+
+### Request Body
+
+```json
+{
+  "timeout": 20
+}
+```
+
+### Curl Test
+
+```
+curl -X PUT http://127.0.0.1:5000/monitors/device-1/timeout -H "Content-Type: application/json" -d "{\"timeout\":20}"
+```
+
+### Response
+
+```json
+{
+  "message": "Timeout for device-1 updated to 20 seconds"
+}
+```
+
+### What Happens
+
+1. The system checks if the device exists.
+2. The current timer is cancelled.
+3. The timeout value is updated.
+4. A new monitoring timer starts using the updated timeout.
+
+This feature allows administrators to adjust monitoring intervals without deleting and recreating monitors.
+
+---
+
+# 5. Get All Device Status (Developer’s Choice Feature)
+
+This endpoint shows the **status of all monitored devices**.
 
 ### Endpoint
 
@@ -248,19 +323,13 @@ This endpoint shows the status of all monitored devices.
 GET /monitors/devices-status
 ```
 
-### Curl Test 
+### Curl Test
 
 ```
 curl http://127.0.0.1:5000/monitors/devices-status
 ```
 
 ### Response
-
-```
-200 OK
-```
-
-Example output:
 
 ```json
 [
@@ -274,66 +343,33 @@ Example output:
   },
   {
     "device_id": "device-3",
-    "status": "pause"
+    "status": "paused"
   }
 ]
 ```
 
 ### What Happens
 
-The system loops through all registered monitors and prints all the current status of the device 
+The system loops through all registered monitors and returns the **current status of each device**.
 
-for instance: 
-
-```json 
-[
-  {
-    "device_id": "device-1",
-    "status": "down"
-  },
-  {
-    "device_id": "device-2",
-    "status": "alive"
-  },
-  {
-    "device_id": "device-3",
-    "status": "pause"
-  }
-]
-```
 ---
 
-
-# 4.  **The Developer's Choice:**  
-
-## Device Status Endpoint
-
-I added a new endpoint that allows administrators to view the status of all monitored devices at once.
-
-```
-GET /monitors/devices-status
-```
-
-### curl test 
-```
-curl http://127.0.0.1:5000/monitors/devices-status
-```
-
-### Why This Feature Is Useful
-
-In a real monitoring system, administrators may need to quickly check the health of all devices. Without this feature, they would need to check each device individually by sending requests to different endpoints.
-
-This endpoint provides a quick overview of all monitored devices and their current status.
-
-### Device Status Types
-Each device can have one of the following statuses:
+# Device Status Types
 
 | Status | Meaning                                              |
 | ------ | ---------------------------------------------------- |
-| ALIVE | Device is sending heartbeats and is working normally |
-| PAUSED | Monitoring is temporarily paused (maintenance mode)  |
+| ALIVE  | Device is sending heartbeats and is working normally |
+| PAUSED | Monitoring is temporarily paused                     |
 | DOWN   | Device failed to send heartbeat before timeout       |
 
+---
 
+# Developer Choice Explanation
 
+ 
+The Device Status Endpoint and Update Timeout Endpoint were added as developer enhancements to make the monitoring system more practical and flexible.
+
+Device Status Endpoint: Provides a quick overview of all devices in one request, so administrators don’t have to check each device individually. This makes system monitoring easier and more efficient.
+
+Update Timeout Endpoint: Allows administrators to dynamically adjust the monitoring interval for any device without deleting and recreating monitors. This gives greater control and flexibility over device monitoring.
 
